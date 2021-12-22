@@ -8,6 +8,10 @@ class BinaryTreeNode {
   }
 }
 
+
+//note: guide: when keeping track of items that get summed use algos like helpers in minDepth/maxSum/maxDepth
+//when keeping comparing indiv nodes to all other nodes use algos like BFS/DFS 
+
 class BinaryTree {
   constructor(root = null) {
     this.root = root;
