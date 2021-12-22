@@ -67,7 +67,21 @@ class BinaryTree {
    * The path doesn't need to start at the root, but you can't visit a node more than once. */
 
   maxSum() {
-
+		let totalSum = 0;
+    
+    
+    function helper(node){
+      if(!node) return 0;
+      
+      const rightSum = helper(node.right);
+      const leftSum = helper(node.left);
+      totalSum = Math.max(totalSum, node.val + leftSum + rightSum); //needed otherwise only will get either left or right sum if you only return below here.
+      return Math.max(leftSum + node.val, rightSum + node.val);
+    }
+    
+    helper(this.root);
+    
+    return totalSum;
   }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
