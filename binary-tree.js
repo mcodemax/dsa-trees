@@ -120,29 +120,34 @@ class BinaryTree {
 
   areCousins(node1, node2) {
 	//
-    
+    if(node1 === this.root || node2 === this.root) return false;
     //must have diff parents.
-  	function getDepthAndParent(currNode, targetNode, data = { depth: 0, isParent: null}){	
-    	if(data.parent == true) return data; //prevents redundancy of adding depth:
+  	function getDepthAndParent(currNode, targetNode, data = { depth: 0, parent: null}){	//might need another variable for depth outside of data obj
+    	if(data.parent) return data; //prevents redundancy of adding depth:
       //e.g. finding the wanted node in currentNode.left, then skipping currentNode.right 
       //since we are returning data immediately, since we already found the parent
     
       if(currNode.left === targetNode){
       	data.depth++;
-        data.isParent = true;
+        data.parent = true;
       }
       
-      if(currNode.left === targetNode){
+      if(currNode.right === targetNode){
       	data.depth++;
-        data.isParent = true;
+        data.parent = true;
       }
       
+      if(currNode.left) getDepthAndParent(currNode.left, targetNode, data);
       
+      if(currNode.right) getDepthAndParent(currNode.right, targetNode, data);
       
       return data;
     }
     
+    const node1data = getDepthAndParent(this.root, node1);
+    const node2data = getDepthAndParent(this.root, node2);
     
+    return node1data.parent !== node2data.parent && node1data.depth === node2data.depth;
   }
 
   /** Further study!
