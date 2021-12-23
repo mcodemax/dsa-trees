@@ -119,7 +119,30 @@ class BinaryTree {
    * (i.e. are at the same level but have different parents. ) */
 
   areCousins(node1, node2) {
-
+	//
+    
+    //must have diff parents.
+  	function getDepthAndParent(currNode, targetNode, data = { depth: 0, isParent: null}){	
+    	if(data.parent == true) return data; //prevents redundancy of adding depth:
+      //e.g. finding the wanted node in currentNode.left, then skipping currentNode.right 
+      //since we are returning data immediately, since we already found the parent
+    
+      if(currNode.left === targetNode){
+      	data.depth++;
+        data.isParent = true;
+      }
+      
+      if(currNode.left === targetNode){
+      	data.depth++;
+        data.isParent = true;
+      }
+      
+      
+      
+      return data;
+    }
+    
+    
   }
 
   /** Further study!
