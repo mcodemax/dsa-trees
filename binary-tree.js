@@ -92,7 +92,26 @@ class BinaryTree {
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
-
+	let found = null;//init to null b/c might not find something that meets the critiria
+    
+    const queue = [this.root];
+    
+    while(queue.length){
+    	const currNode = queue.shift();
+      
+      if(found !== null){
+      	if(currNode.val > lowerBound && currNode.val < found) found = currNode.val;
+      }else if(found === null){
+      	if(currNode.val > lowerBound) found = currNode.val;
+      }
+      
+      
+      
+      if(currNode.left) queue.push(currNode.left); //push on queue nodes of right
+      if(currNode.right) queue.push(currNode.right);
+    }
+    
+    return found;
   }
 
   /** Further study!
