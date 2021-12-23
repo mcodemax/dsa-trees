@@ -119,35 +119,44 @@ class BinaryTree {
    * (i.e. are at the same level but have different parents. ) */
 
   areCousins(node1, node2) {
-	//
+	//SOMETHING IS WRONG!!!!! PROB SOMETHING ABOUT DEPTH OR DATA.DEPTH!!!
     if(node1 === this.root || node2 === this.root) return false;
     //must have diff parents.
   	function getDepthAndParent(currNode, targetNode, data = { depth: 0, parent: null}){	//might need another variable for depth outside of data obj
     	if(data.parent) return data; //prevents redundancy of adding depth:
       //e.g. finding the wanted node in currentNode.left, then skipping currentNode.right 
       //since we are returning data immediately, since we already found the parent
-    
-      if(currNode.left === targetNode){
+    	console.log(data.depth)
+      if(currNode.left === targetNode || currNode.right === targetNode){
       	data.depth++;
-        data.parent = true;
+        data.parent = currNode;
       }
       
-      if(currNode.right === targetNode){
+      if(currNode.left){
       	data.depth++;
-        data.parent = true;
+      	getDepthAndParent(currNode.left, targetNode, data);
+      } 
+      
+      if(currNode.right){
+      	data.depth++;
+      	getDepthAndParent(currNode.right, targetNode, data);
       }
-      
-      if(currNode.left) getDepthAndParent(currNode.left, targetNode, data);
-      
-      if(currNode.right) getDepthAndParent(currNode.right, targetNode, data);
       
       return data;
     }
     
     const node1data = getDepthAndParent(this.root, node1);
     const node2data = getDepthAndParent(this.root, node2);
+    console.log(node1data, node2data);
+    console.log(node1data.parent, node2data.parent)
     
-    return node1data.parent !== node2data.parent && node1data.depth === node2data.depth;
+    
+    let sameLevel =
+      node1data && node2data && node1data.depth === node2data.depth;
+    let differentParents =
+      node1data && node2data && node1data.parent !== node2data.parent;
+    return sameLevel && differentParents;
+    //return node1data.parent !== node2data.parent && node1data.depth === node2data.depth;
   }
 
   /** Further study!
