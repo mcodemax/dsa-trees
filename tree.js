@@ -15,7 +15,7 @@ class Tree {
   /** sumValues(): add up all of the values in the tree. */
 
   sumValues() {
- 		if(!this.root) return 0;
+ 		if(!this.root) return;
     
     let sum = 0;
     
