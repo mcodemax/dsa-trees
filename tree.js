@@ -69,7 +69,30 @@ class Tree {
    * whose value is greater than lowerBound. */
 
   numGreater(lowerBound) {
-
+		if(!this.root) return 0;
+    
+    let count = 0;
+    
+    if(this.root.val % 2 === 0) count++;
+    
+    
+    function countHelp(node){
+          
+      	for(const child of node.children){
+        
+        		if(node.children.length > 0){
+            
+              if(child.val > lowerBound) count++;
+            }
+        	
+          	countHelp(child);   
+            
+        }
+      
+    }
+    
+    countHelp(this.root);
+    return count;
   }
   
   WRONGsumValues() {// this version wrong b/c only sees orphans
