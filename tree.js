@@ -40,9 +40,31 @@ class Tree {
   /** countEvens(): count all of the nodes in the tree with even values. */
 
   countEvens() {
-
+		if(!this.root) return 0;
+    
+    let evens = 0;
+    
+    if(this.root.val % 2 === 0) evens++;
+    
+    
+    function countEvenHelp(node){
+          
+      	for(const child of node.children){
+        
+        		if(node.children.length > 0){
+            
+              if(child.val % 2 === 0) evens++;
+            }
+        	
+          	countEvenHelp(child);   
+            
+        }
+      
+    }
+    
+    countEvenHelp(this.root);
+    return evens;
   }
-
   /** numGreater(lowerBound): return a count of the number of nodes
    * whose value is greater than lowerBound. */
 
