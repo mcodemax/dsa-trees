@@ -45,6 +45,28 @@ class Tree {
   numGreater(lowerBound) {
 
   }
+  
+  WRONGsumValues() {// this version wrong b/c only sees orphans
+ 		if(!this.root) return 0;
+    
+    let sum = this.root.val;
+    
+    function sumHelp(node){
+    	
+      	if(node.children.length === 0){
+            sum+=node.val;
+      	}//gets omitted if there's children
+          
+      	for(const child of node.children){
+          	sumHelp(child);   
+            
+        }
+      
+    }
+    
+    sumHelp(this.root);
+    return sum;
+  }
 }
 
 module.exports = { Tree, TreeNode };
