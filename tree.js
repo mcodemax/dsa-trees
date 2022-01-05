@@ -14,19 +14,23 @@ class Tree {
 
   /** sumValues(): add up all of the values in the tree. */
 
-  sumValues() {
- 		if(!this.root) return;
+  sumValues() {// this version wrong b/c only sees orphans
+ 		if(!this.root) return 0;
     
-    let sum = 0;
+    let sum = this.root.val;
     
     function sumHelp(node){
-    	if(node.children.length === 0){
-      	sum+=node.val;
-      }else{
+          
       	for(const child of node.children){
-        	sumHelp(child)
+        
+        		if(node.children.length > 0){
+            	sum+=child.val;
+            }
+        	
+          	sumHelp(child);   
+            
         }
-      }
+      
     }
     
     sumHelp(this.root);
