@@ -92,7 +92,9 @@ class BinaryTree {
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
-	let found = null;//init to null b/c might not find something that meets the critiria
+    if(!this.root) return null;
+
+	  let found = null;//init to null b/c might not find something that meets the critiria
     
     const queue = [this.root];
     
@@ -119,27 +121,29 @@ class BinaryTree {
    * (i.e. are at the same level but have different parents. ) */
 
   areCousins(node1, node2) {
-	//SOMETHING IS WRONG!!!!! PROB SOMETHING ABOUT DEPTH OR DATA.DEPTH!!!
     if(node1 === this.root || node2 === this.root) return false;
     //must have diff parents.
-  	function getDepthAndParent(currNode, targetNode, data = { depth: 0, parent: null}){	//might need another variable for depth outside of data obj
+  	function getDepthAndParent(currNode, targetNode, data = { depth: 0, parent: null}, depth = 0){	//might need another variable for depth outside of data obj
     	if(data.parent) return data; //prevents redundancy of adding depth:
       //e.g. finding the wanted node in currentNode.left, then skipping currentNode.right 
       //since we are returning data immediately, since we already found the parent
-    	console.log(data.depth)
+    	console.log(data.depth, depth)
       if(currNode.left === targetNode || currNode.right === targetNode){
-      	data.depth++;
+      	data.depth = depth + 1;
         data.parent = currNode;
+
       }
       
       if(currNode.left){
-      	data.depth++;
-      	getDepthAndParent(currNode.left, targetNode, data);
+      	// data.depth++; //we don't add depth to the obj here, only the function
+        //which doesn't mutate the obj and store it forever in there b/c
+        // going thru both this and the next if statement can add redundant depth
+      	getDepthAndParent(currNode.left, targetNode, data, depth + 1);
       } 
       
       if(currNode.right){
-      	data.depth++;
-      	getDepthAndParent(currNode.right, targetNode, data);
+      	// data.depth++; //see above if statement to see why this is commented out
+      	getDepthAndParent(currNode.right, targetNode, data, depth + 1);
       }
       
       return data;
@@ -147,8 +151,7 @@ class BinaryTree {
     
     const node1data = getDepthAndParent(this.root, node1);
     const node2data = getDepthAndParent(this.root, node2);
-    console.log(node1data, node2data);
-    console.log(node1data.parent, node2data.parent)
+
     
     
     let sameLevel =
